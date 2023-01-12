@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import './world.dart';
 import 'managers/managers.dart';
+import 'sprites/player.dart';
 // Add a Player to the game: import Sprites
 
 enum Character { dash, sparky }
@@ -22,8 +23,8 @@ class DoodleDash extends FlameGame
   int screenBufferSpace = 300;
   ObjectManager objectManager = ObjectManager();
 
-  // Add a Player to the game: Create a Player variable
-
+  // Added a Player to the game: Create a Player variable
+  late Player player;
   @override
   Future<void> onLoad() async {
     await add(_world);
@@ -62,13 +63,15 @@ class DoodleDash extends FlameGame
   }
 
   void initializeGameStart() {
-    // Add a Player to the game: Call setCharacter
+    // Added a Player to the game: Call setCharacter
+    setCharacter();
 
     gameManager.reset();
 
     if (children.contains(objectManager)) objectManager.removeFromParent();
 
     levelManager.reset();
+    player.resetPosition();
 
     // Core gameplay: Reset player & camera boundaries
 
@@ -84,8 +87,13 @@ class DoodleDash extends FlameGame
   }
 
   void setCharacter() {
-    // Add a Player to the game: Initialize character
-    // Add a Player to the game: Add player
+    // Added a Player to the game: Initialize character
+    // Added a Player to the game: Add player
+    player = Player(
+      character: gameManager.character,
+      jumpSpeed: levelManager.startingJumpSpeed,
+    );
+    add(player);
   }
 
   void startGame() {
